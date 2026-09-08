@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Watch Hub</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="header-row">
+        <div>
+          <h2>The Watch Hub</h2>
+          <p class="subtitle">Upload WebP and Generate Post</p>
+        </div>
+        <button
+          id="resetBtn"
+          class="icon-btn"
+          onclick="resetForm()"
+          title="Clear everything"
+        >
+          &#x21bb;
+        </button>
+      </div>
+
+      <!-- TYPE SELECTION (Tab Switcher) -->
+      <div class="tab-switcher">
+        <button
+          id="tabWatch"
+          class="tab-btn active"
+          onclick="switchTab('watch')"
+        >
+          ⌚ Watches
+        </button>
+        <button id="tabUsed" class="tab-btn" onclick="switchTab('used')">
+          🔄 Used Watches
+        </button>
+        <button id="tabAuction" class="tab-btn" onclick="switchTab('auction')">
+          🔨 Auction
+        </button>
+        <button
+          id="tabInstallment"
+          class="tab-btn"
+          onclick="switchTab('installment')"
+        >
+          🏦 Installment
+        </button>
+      </div>
+
+      <!-- Asosiy ma'lumotlar -->
+      <div class="section-title">Main Information</div>
+      <div class="form-group">
+        <div class="row">
+          <input type="text" id="watchId" placeholder="ID (auto)" readonly />
+          <select id="watchStatus">
+            <option value="active" selected>Status: Active</option>
+            <option value="no-active">Status: No-Active</option>
+          </select>
+        </div>
+
+        <!-- BREND TANLASH (Kengaytirilgan Swiss & Japan premuim ro'yxati) -->
+        <select id="watchBrand">
+          <option value="" selected>Select Brand</option>
+          <optgroup label="Premium Swiss Brands">
+            <option value="Rolex">Rolex</option>
+            <option value="Patek Philippe">Patek Philippe</option>
+            <option value="Audemars Piguet">Audemars Piguet</option>
+            <option value="Vacheron Constantin">Vacheron Constantin</option>
+            <option value="A. Lange & Söhne">A. Lange & Söhne</option>
+            <option value="Breguet">Breguet</option>
+            <option value="Jaeger-LeCoultre">Jaeger-LeCoultre</option>
+            <option value="Blancpain">Blancpain</option>
+            <option value="Ulysse Nardin">Ulysse Nardin</option>
+            <option value="Girard-Perregaux">Girard-Perregaux</option>
+            <option value="Chopard">Chopard</option>
+            <option value="Piaget">Piaget</option>
+            <option value="Cartier">Cartier</option>
+            <option value="Hublot">Hublot</option>
+            <option value="IWC">IWC</option>
+            <option value="Panerai">Panerai</option>
+            <option value="Breitling">Breitling</option>
+            <option value="Omega">Omega</option>
+            <option value="Zenith">Zenith</option>
+          </optgroup>
+          <optgroup label="Popular Swiss Brands">
+            <option value="Tissot">Tissot</option>
+            <option value="Longines">Longines</option>
+            <option value="TAG Heuer">TAG Heuer</option>
+            <option value="Oris">Oris</option>
+            <option value="Rado">Rado</option>
+            <option value="Certina">Certina</option>
+            <option value="Mido">Mido</option>
+            <option value="Hamilton">Hamilton</option>
+            <option value="Frederique Constant">Frederique Constant</option>
+            <option value="Raymond Weil">Raymond Weil</option>
+            <option value="Maurice Lacroix">Maurice Lacroix</option>
+            <option value="Baume & Mercier">Baume & Mercier</option>
+            <option value="Victorinox">Victorinox</option>
+            <option value="Wenger">Wenger</option>
+            <option value="Swatch">Swatch</option>
+          </optgroup>
+          <optgroup label="Japan Brands">
+            <option value="Grand Seiko">Grand Seiko</option>
+            <option value="Seiko">Seiko</option>
+            <option value="Citizen">Citizen</option>
+            <option value="Orient">Orient</option>
+            <option value="Casio">Casio</option>
+            <option value="Credor">Credor</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="Other">Other Brand</option>
+          </optgroup>
+        </select>
+
+        <!-- Karta sarlavhasi -->
+        <input
+          type="text"
+          id="watchCardTitle"
+          placeholder="Card Title (e.g., PRX Carbon)"
+        />
+
+        <!-- Narx va Ref Kod -->
+        <div id="priceRow" class="row">
+          <input type="number" id="watchPrice" placeholder="Price ($)" />
+          <input
+            type="text"
+            id="watchRefCode"
+            placeholder="Ref. Code / Model"
+          />
+        </div>
+
+        <!-- Auksion inputlari -->
+        <div id="auctionFields" class="form-group hidden">
+          <div class="row">
+            <input
+              type="number"
+              id="aucStartPrice"
+              placeholder="Start Price ($)"
+            />
+            <input
+              type="number"
+              id="aucBidStep"
+              placeholder="Bid Step ($)"
+              value="50"
+            />
+          </div>
+          <div class="row">
+            <input
+              type="datetime-local"
+              id="aucEndTime"
+              title="Auction End Time"
+            />
+          </div>
+        </div>
+
+        <!-- Installment inputlari -->
+        <div id="installmentFields" class="form-group hidden">
+          <div class="row">
+            <input
+              type="number"
+              id="instMinDown"
+              placeholder="Min. Prepayment ($)"
+            />
+            <input
+              type="number"
+              id="instAnnualRate"
+              placeholder="Annual Rate %"
+              value="20"
+            />
+          </div>
+          <div class="row">
+            <input
+              type="number"
+              id="instMinMonths"
+              placeholder="Min. Term (months)"
+              value="6"
+            />
+            <input
+              type="number"
+              id="instMaxMonths"
+              placeholder="Max. Term (months)"
+              value="36"
+            />
+          </div>
+
+          <!-- KALKULYATOR (faqat admin preview) -->
+          <div class="calc-box">
+            <div class="calc-title">
+              📊 Admin Calculator: Calculates options based on Price, %, and
+              Term.
+            </div>
+            <div id="instCalcPreview" class="calc-result">
+              Enter price and terms.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texnik xususiyatlar (Siz xohlagandek TEXT INPUTLARI) -->
+      <div class="section-title">Technical Specifications (English labels)</div>
+      <div class="form-group">
+        <div class="row">
+          <input
+            type="text"
+            id="watchMaterial"
+            placeholder="Case Material (e.g., Steel, Gold)"
+          />
+          <input
+            type="text"
+            id="watchBracelet"
+            placeholder="Bracelet/Strap (e.g., Leather, Steel)"
+          />
+        </div>
+        <div class="row">
+          <input
+            type="text"
+            id="watchGender"
+            placeholder="Gender (e.g., Men, Women, Unisex)"
+          />
+          <input
+            type="text"
+            id="watchGlass"
+            placeholder="Glass (e.g., Sapphire, Mineral)"
+          />
+        </div>
+        <div class="row">
+          <input
+            type="text"
+            id="watchMechanism"
+            placeholder="Mechanism (e.g., Automatic, Quartz)"
+          />
+          <input
+            type="text"
+            id="watchSize"
+            placeholder="Case Size (e.g., 41mm)"
+          />
+        </div>
+        <div class="row">
+          <input
+            type="text"
+            id="watchWaterResistance"
+            placeholder="Water Resistance (e.g., 10 ATM, 100m)"
+          />
+        </div>
+      </div>
+
+      <!-- Video / ijtimoiy tarmoq -->
+      <div class="section-title">Video Review / Verification</div>
+      <div class="form-group">
+        <input
+          type="text"
+          id="watchInstagram"
+          placeholder="Instagram link (optional)"
+        />
+        <input
+          type="text"
+          id="watchYoutube"
+          placeholder="Youtube link (optional)"
+        />
+      </div>
+
+      <!-- Tavsif -->
+      <div class="section-title">Description</div>
+      <div class="form-group">
+        <textarea
+          id="watchDescription"
+          class="desc-input"
+          placeholder="Watch description..."
+        ></textarea>
+      </div>
+
+      <!-- Rasm Tanlash -->
+      <div class="section-title">Photos (min. 4)</div>
+      <div class="upload-box">
+        <label for="imageInput" class="upload-label">
+          <span>📷 Select Photos (.webp auto)</span>
+        </label>
+        <input type="file" id="imageInput" multiple accept="image/*" />
+      </div>
+
+      <!-- Status -->
+      <div id="status" class="status-text"></div>
+
+      <!-- Yuklangan rasmlar previyusi -->
+      <div id="previewContainer" class="preview-grid"></div>
+
+      <!-- Tayyor Post Matni -->
+      <div class="section-title">Ready Post</div>
+      <textarea
+        id="resultText"
+        readonly
+        placeholder="Post text will appear here..."
+      ></textarea>
+
+      <!-- Tugmalar -->
+      <div class="btn-row">
+        <button id="copyBtn" onclick="copyPost()">📋 Copy Post</button>
+        <button id="resetBtnBottom" class="secondary-btn" onclick="resetForm()">
+          🔄 New Post
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
