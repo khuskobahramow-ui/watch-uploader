@@ -1,4 +1,4 @@
-const IMGBB_API_KEY = "0bf75dea880937d78cf5e554ed16a2e1";
+const IMGBB_API_KEY = "525f5b21013f284ac9306b4a99c30b7e";
 let uploadedImageUrls = [];
 let currentTab = "watch"; // Default mode
 
